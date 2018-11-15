@@ -1,0 +1,14 @@
+
+library for peer-to-peer gossip network
+
+- distributed
+- highly available
+- datacenter + rack aware
+- peer-to-peer
+- not yet finished
+
+
+see also:
+  Amazon Dynamo
+  https://metacpan.org/release/AC-Yenta
+
