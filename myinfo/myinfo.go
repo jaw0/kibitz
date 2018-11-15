@@ -149,9 +149,10 @@ func (i *Info) IsOwnAddr(addr string) bool {
 	return i.myaddrs[addr]
 }
 
-// RSN - ipv6
-// RFC 1918
-var rfc1918 = [...]string{"10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16"}
+var pvtRange = [...]string{
+	"10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16", // RFC 1918
+	"fc00::/7", // RFC 4193
+}
 
 func isPrivateIP(ip net.IP) bool {
 
@@ -159,7 +160,7 @@ func isPrivateIP(ip net.IP) bool {
 		return false
 	}
 
-	for _, n := range rfc1918 {
+	for _, n := range pvtRange {
 		_, block, _ := net.ParseCIDR(n)
 		if block.Contains(ip) {
 			return true
