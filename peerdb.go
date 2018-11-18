@@ -355,6 +355,7 @@ func (pdb *DB) periodic() {
 
 		select {
 		case <-pdb.stop:
+			dl.Debug("done")
 			pdb.done.Done()
 			return
 		case <-time.After(delay):
@@ -374,6 +375,7 @@ func (pdb *DB) monitorPeers() {
 
 		select {
 		case <-pdb.stop:
+			dl.Debug("done")
 			pdb.done.Done()
 			return
 		case <-time.After(delay):
