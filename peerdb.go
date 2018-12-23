@@ -29,7 +29,6 @@ type Conf struct {
 	Iface       infoer
 	System      string
 	Seed        []string
-	Monitor     []string
 	Id          string
 	Hostname    string
 	Environment string
@@ -50,7 +49,6 @@ type DB struct {
 	promiscuous bool // collect data on all system types?
 	port        int  // tcp port
 	seed        []string
-	monitor     []string
 	myaddrs     map[string]string
 	mydoms      map[string]bool
 	nmon        *netMon
@@ -78,7 +76,6 @@ func New(c *Conf) *DB {
 		promiscuous: c.Promiscuous,
 		port:        c.Port,
 		seed:        c.Seed,
-		monitor:     c.Monitor,
 		clock:       lamport.New(),
 		nmon:        netMonNew(),
 		stop:        make(chan struct{}),
@@ -103,7 +100,6 @@ func New(c *Conf) *DB {
 func (pdb *DB) Start() {
 	pdb.done.Add(2)
 	go pdb.periodic()
-	go pdb.monitorPeers()
 }
 
 func (pdb *DB) Stop() {
@@ -305,11 +301,23 @@ func (p *DB) Rack() string {
 func (p *DB) Datacenter() string {
 	return p.dc
 }
+func (p *DB) Host() string {
+	return p.host
+}
+func (p *DB) Env() string {
+	return p.env
+}
 func (p *DB) Id() string {
 	return p.id
 }
 func (p *DB) DomOK(dom string) bool {
 	return p.mydoms[dom]
+}
+func (p *DB) ClockBoot() uint64 {
+	return p.bootTime
+}
+func (p *DB) ClockNow() uint64 {
+	return p.clock.Inc().Uint64()
 }
 
 func (pdb *DB) Get(id string) *Peer {
@@ -352,26 +360,6 @@ func (pdb *DB) periodic() {
 			// faster at startup
 			delay = time.Second
 		}
-
-		select {
-		case <-pdb.stop:
-			dl.Debug("done")
-			pdb.done.Done()
-			return
-		case <-time.After(delay):
-			continue
-		}
-	}
-}
-
-func (pdb *DB) monitorPeers() {
-
-	for {
-		for _, m := range pdb.monitor {
-			pdb.monitorPeer(m)
-		}
-
-		delay := 1 * time.Second
 
 		select {
 		case <-pdb.stop:

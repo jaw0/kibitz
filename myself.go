@@ -91,7 +91,7 @@ func (pdb *DB) MyInfo() *PeerInfo {
 	return r
 }
 
-func (pdb *DB) isOwnAddr(addr string) bool {
+func (pdb *DB) IsOwnAddr(addr string) bool {
 	_, ok := pdb.myaddrs[addr]
 	return ok
 }

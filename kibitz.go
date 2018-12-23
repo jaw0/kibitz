@@ -31,7 +31,7 @@ func (pdb *DB) kibitzWithRandomPeer() {
 	}
 
 	// don't talk to self. any of my addrs.
-	if pdb.isOwnAddr(peerAddr) {
+	if pdb.IsOwnAddr(peerAddr) {
 		dl.Debug("kibitz with peer - skipping - not me %s %s", peerAddr, peerId)
 		return
 	}
@@ -185,30 +185,4 @@ func (pdb *DB) useAddr(p *Peer) (string, string, string) {
 	}
 
 	return prefer.GetAddr(), prefer.GetNatdom(), p.id
-}
-
-// ################################################################
-
-func (pdb *DB) monitorPeer(peer string) {
-
-	// don't talk to self. any of my addrs.
-	if pdb.isOwnAddr(peer) {
-		dl.Debug("monitor - skipping - not me %s", peer)
-		return
-	}
-
-	dl.Debug("monitor %s", peer)
-
-	_, err := pdb.iface.Send(peer, TIMEOUT, pdb.MyInfo())
-
-	if err != nil {
-		dl.Debug(" => down err %v", err)
-		pdb.PeerDn(peer)
-
-		clienterrs.Add(1)
-		return
-	}
-
-	clientconns.Add(1)
-	pdb.PeerUp(peer)
 }
