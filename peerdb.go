@@ -98,7 +98,7 @@ func New(c *Conf) *DB {
 }
 
 func (pdb *DB) Start() {
-	pdb.done.Add(2)
+	pdb.done.Add(1)
 	go pdb.periodic()
 }
 
