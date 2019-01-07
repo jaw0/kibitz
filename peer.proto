@@ -3,30 +3,30 @@
 // Created: 2018-Nov-05 15:25 (EST)
 // Function: kibitz protocol
 
-syntax = "proto2";
+syntax = "proto3";
 package kibitz;
 
 message NetInfo {
-        required string         addr            = 1;
-        optional string         natdom          = 2;
+        string addr            		= 1;
+        string natdom          		= 2;
 }
 
 message PeerInfo {
-        required int32          status_code     = 1;
-        required string         subsystem       = 2;
-        optional string         environment     = 3;
-        required string         server_id       = 4;
-        optional string         hostname        = 5;
-        optional string         datacenter      = 6;
-        optional string         rack            = 7;
+        int32          status_code     = 1;
+        string         subsystem       = 2;
+        string         environment     = 3;
+        string         server_id       = 4;
+        string         hostname        = 5;
+        string         datacenter      = 6;
+        string         rack            = 7;
 
         // lamport clocks (see lamport.go)
-        optional uint64         time_checked    = 8;
-        optional uint64         time_up         = 9;
-        optional uint64         time_created    = 10;		// set by origin
-        optional uint64         time_conf       = 11;
+        uint64         time_checked    = 8;
+        uint64         time_up         = 9;
+        uint64         time_created    = 10;		// set by origin
+        uint64         time_conf       = 11;
 
-        optional string         via             = 17;		// informational
+        string         via             = 17;		// informational
         repeated NetInfo        net_info        = 20;
 }
 

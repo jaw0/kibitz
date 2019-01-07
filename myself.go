@@ -55,8 +55,8 @@ func (pdb *DB) learnNetwork() {
 		d := ni.Dom
 
 		pdb.netinfo = append(pdb.netinfo, &NetInfo{
-			Addr:   &a,
-			Natdom: &d,
+			Addr:   a,
+			Natdom: d,
 		})
 
 	}
@@ -67,25 +67,25 @@ func (pdb *DB) MyInfo() *PeerInfo {
 	now := pdb.clock.Inc().Uint64()
 
 	r := &PeerInfo{
-		Subsystem:   &pdb.sys,
-		Environment: &pdb.env,
-		ServerId:    &pdb.id,
-		Hostname:    &pdb.host,
+		Subsystem:   pdb.sys,
+		Environment: pdb.env,
+		ServerId:    pdb.id,
+		Hostname:    pdb.host,
 		NetInfo:     pdb.netinfo,
-		TimeCreated: &now,
-		TimeChecked: &now,
-		TimeUp:      &now,
-		TimeConf:    &pdb.bootTime,
-		Via:         &viaDot,
+		TimeCreated: now,
+		TimeChecked: now,
+		TimeUp:      now,
+		TimeConf:    pdb.bootTime,
+		Via:         viaDot,
 	}
 
 	r.SetStatusCode(STATUS_UP)
 
 	if pdb.dc != "" {
-		r.Datacenter = &pdb.dc
+		r.Datacenter = pdb.dc
 	}
 	if pdb.rack != "" {
-		r.Rack = &pdb.rack
+		r.Rack = pdb.rack
 	}
 
 	return r

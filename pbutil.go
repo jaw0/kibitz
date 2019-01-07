@@ -10,6 +10,5 @@ import (
 )
 
 func (p *PeerInfo) SetStatusCode(st PeerStatus) {
-	it := int32(st)
-	p.StatusCode = &it
+	p.StatusCode = int32(st)
 }

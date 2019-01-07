@@ -7,8 +7,6 @@ import proto "github.com/golang/protobuf/proto"
 import fmt "fmt"
 import math "math"
 
-import github_com_golang_protobuf_proto "github.com/golang/protobuf/proto"
-
 import io "io"
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -23,8 +21,8 @@ var _ = math.Inf
 const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 
 type NetInfo struct {
-	Addr                 *string  `protobuf:"bytes,1,req,name=addr" json:"addr,omitempty"`
-	Natdom               *string  `protobuf:"bytes,2,opt,name=natdom" json:"natdom,omitempty"`
+	Addr                 string   `protobuf:"bytes,1,opt,name=addr,proto3" json:"addr,omitempty"`
+	Natdom               string   `protobuf:"bytes,2,opt,name=natdom,proto3" json:"natdom,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -34,7 +32,7 @@ func (m *NetInfo) Reset()         { *m = NetInfo{} }
 func (m *NetInfo) String() string { return proto.CompactTextString(m) }
 func (*NetInfo) ProtoMessage()    {}
 func (*NetInfo) Descriptor() ([]byte, []int) {
-	return fileDescriptor_peer_d4a20dbc36d3d920, []int{0}
+	return fileDescriptor_peer_330eea082c9f36ee, []int{0}
 }
 func (m *NetInfo) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -64,33 +62,33 @@ func (m *NetInfo) XXX_DiscardUnknown() {
 var xxx_messageInfo_NetInfo proto.InternalMessageInfo
 
 func (m *NetInfo) GetAddr() string {
-	if m != nil && m.Addr != nil {
-		return *m.Addr
+	if m != nil {
+		return m.Addr
 	}
 	return ""
 }
 
 func (m *NetInfo) GetNatdom() string {
-	if m != nil && m.Natdom != nil {
-		return *m.Natdom
+	if m != nil {
+		return m.Natdom
 	}
 	return ""
 }
 
 type PeerInfo struct {
-	StatusCode  *int32  `protobuf:"varint,1,req,name=status_code,json=statusCode" json:"status_code,omitempty"`
-	Subsystem   *string `protobuf:"bytes,2,req,name=subsystem" json:"subsystem,omitempty"`
-	Environment *string `protobuf:"bytes,3,opt,name=environment" json:"environment,omitempty"`
-	ServerId    *string `protobuf:"bytes,4,req,name=server_id,json=serverId" json:"server_id,omitempty"`
-	Hostname    *string `protobuf:"bytes,5,opt,name=hostname" json:"hostname,omitempty"`
-	Datacenter  *string `protobuf:"bytes,6,opt,name=datacenter" json:"datacenter,omitempty"`
-	Rack        *string `protobuf:"bytes,7,opt,name=rack" json:"rack,omitempty"`
+	StatusCode  int32  `protobuf:"varint,1,opt,name=status_code,json=statusCode,proto3" json:"status_code,omitempty"`
+	Subsystem   string `protobuf:"bytes,2,opt,name=subsystem,proto3" json:"subsystem,omitempty"`
+	Environment string `protobuf:"bytes,3,opt,name=environment,proto3" json:"environment,omitempty"`
+	ServerId    string `protobuf:"bytes,4,opt,name=server_id,json=serverId,proto3" json:"server_id,omitempty"`
+	Hostname    string `protobuf:"bytes,5,opt,name=hostname,proto3" json:"hostname,omitempty"`
+	Datacenter  string `protobuf:"bytes,6,opt,name=datacenter,proto3" json:"datacenter,omitempty"`
+	Rack        string `protobuf:"bytes,7,opt,name=rack,proto3" json:"rack,omitempty"`
 	// lamport clocks (see lamport.go)
-	TimeChecked          *uint64    `protobuf:"varint,8,opt,name=time_checked,json=timeChecked" json:"time_checked,omitempty"`
-	TimeUp               *uint64    `protobuf:"varint,9,opt,name=time_up,json=timeUp" json:"time_up,omitempty"`
-	TimeCreated          *uint64    `protobuf:"varint,10,opt,name=time_created,json=timeCreated" json:"time_created,omitempty"`
-	TimeConf             *uint64    `protobuf:"varint,11,opt,name=time_conf,json=timeConf" json:"time_conf,omitempty"`
-	Via                  *string    `protobuf:"bytes,17,opt,name=via" json:"via,omitempty"`
+	TimeChecked          uint64     `protobuf:"varint,8,opt,name=time_checked,json=timeChecked,proto3" json:"time_checked,omitempty"`
+	TimeUp               uint64     `protobuf:"varint,9,opt,name=time_up,json=timeUp,proto3" json:"time_up,omitempty"`
+	TimeCreated          uint64     `protobuf:"varint,10,opt,name=time_created,json=timeCreated,proto3" json:"time_created,omitempty"`
+	TimeConf             uint64     `protobuf:"varint,11,opt,name=time_conf,json=timeConf,proto3" json:"time_conf,omitempty"`
+	Via                  string     `protobuf:"bytes,17,opt,name=via,proto3" json:"via,omitempty"`
 	NetInfo              []*NetInfo `protobuf:"bytes,20,rep,name=net_info,json=netInfo" json:"net_info,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}   `json:"-"`
 	XXX_unrecognized     []byte     `json:"-"`
@@ -101,7 +99,7 @@ func (m *PeerInfo) Reset()         { *m = PeerInfo{} }
 func (m *PeerInfo) String() string { return proto.CompactTextString(m) }
 func (*PeerInfo) ProtoMessage()    {}
 func (*PeerInfo) Descriptor() ([]byte, []int) {
-	return fileDescriptor_peer_d4a20dbc36d3d920, []int{1}
+	return fileDescriptor_peer_330eea082c9f36ee, []int{1}
 }
 func (m *PeerInfo) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -131,85 +129,85 @@ func (m *PeerInfo) XXX_DiscardUnknown() {
 var xxx_messageInfo_PeerInfo proto.InternalMessageInfo
 
 func (m *PeerInfo) GetStatusCode() int32 {
-	if m != nil && m.StatusCode != nil {
-		return *m.StatusCode
+	if m != nil {
+		return m.StatusCode
 	}
 	return 0
 }
 
 func (m *PeerInfo) GetSubsystem() string {
-	if m != nil && m.Subsystem != nil {
-		return *m.Subsystem
+	if m != nil {
+		return m.Subsystem
 	}
 	return ""
 }
 
 func (m *PeerInfo) GetEnvironment() string {
-	if m != nil && m.Environment != nil {
-		return *m.Environment
+	if m != nil {
+		return m.Environment
 	}
 	return ""
 }
 
 func (m *PeerInfo) GetServerId() string {
-	if m != nil && m.ServerId != nil {
-		return *m.ServerId
+	if m != nil {
+		return m.ServerId
 	}
 	return ""
 }
 
 func (m *PeerInfo) GetHostname() string {
-	if m != nil && m.Hostname != nil {
-		return *m.Hostname
+	if m != nil {
+		return m.Hostname
 	}
 	return ""
 }
 
 func (m *PeerInfo) GetDatacenter() string {
-	if m != nil && m.Datacenter != nil {
-		return *m.Datacenter
+	if m != nil {
+		return m.Datacenter
 	}
 	return ""
 }
 
 func (m *PeerInfo) GetRack() string {
-	if m != nil && m.Rack != nil {
-		return *m.Rack
+	if m != nil {
+		return m.Rack
 	}
 	return ""
 }
 
 func (m *PeerInfo) GetTimeChecked() uint64 {
-	if m != nil && m.TimeChecked != nil {
-		return *m.TimeChecked
+	if m != nil {
+		return m.TimeChecked
 	}
 	return 0
 }
 
 func (m *PeerInfo) GetTimeUp() uint64 {
-	if m != nil && m.TimeUp != nil {
-		return *m.TimeUp
+	if m != nil {
+		return m.TimeUp
 	}
 	return 0
 }
 
 func (m *PeerInfo) GetTimeCreated() uint64 {
-	if m != nil && m.TimeCreated != nil {
-		return *m.TimeCreated
+	if m != nil {
+		return m.TimeCreated
 	}
 	return 0
 }
 
 func (m *PeerInfo) GetTimeConf() uint64 {
-	if m != nil && m.TimeConf != nil {
-		return *m.TimeConf
+	if m != nil {
+		return m.TimeConf
 	}
 	return 0
 }
 
 func (m *PeerInfo) GetVia() string {
-	if m != nil && m.Via != nil {
-		return *m.Via
+	if m != nil {
+		return m.Via
 	}
 	return ""
 }
@@ -240,19 +238,17 @@ func (m *NetInfo) MarshalTo(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.Addr == nil {
-		return 0, new(github_com_golang_protobuf_proto.RequiredNotSetError)
-	} else {
+	if len(m.Addr) > 0 {
 		dAtA[i] = 0xa
 		i++
-		i = encodeVarintPeer(dAtA, i, uint64(len(*m.Addr)))
-		i += copy(dAtA[i:], *m.Addr)
+		i = encodeVarintPeer(dAtA, i, uint64(len(m.Addr)))
+		i += copy(dAtA[i:], m.Addr)
 	}
-	if m.Natdom != nil {
+	if len(m.Natdom) > 0 {
 		dAtA[i] = 0x12
 		i++
-		i = encodeVarintPeer(dAtA, i, uint64(len(*m.Natdom)))
-		i += copy(dAtA[i:], *m.Natdom)
+		i = encodeVarintPeer(dAtA, i, uint64(len(m.Natdom)))
+		i += copy(dAtA[i:], m.Natdom)
 	}
 	if m.XXX_unrecognized != nil {
 		i += copy(dAtA[i:], m.XXX_unrecognized)
@@ -275,80 +271,74 @@ func (m *PeerInfo) MarshalTo(dAtA []byte) (int, error) {
 	_ = i
 	var l int
 	_ = l
-	if m.StatusCode == nil {
-		return 0, new(github_com_golang_protobuf_proto.RequiredNotSetError)
-	} else {
+	if m.StatusCode != 0 {
 		dAtA[i] = 0x8
 		i++
-		i = encodeVarintPeer(dAtA, i, uint64(*m.StatusCode))
+		i = encodeVarintPeer(dAtA, i, uint64(m.StatusCode))
 	}
-	if m.Subsystem == nil {
-		return 0, new(github_com_golang_protobuf_proto.RequiredNotSetError)
-	} else {
+	if len(m.Subsystem) > 0 {
 		dAtA[i] = 0x12
 		i++
-		i = encodeVarintPeer(dAtA, i, uint64(len(*m.Subsystem)))
-		i += copy(dAtA[i:], *m.Subsystem)
+		i = encodeVarintPeer(dAtA, i, uint64(len(m.Subsystem)))
+		i += copy(dAtA[i:], m.Subsystem)
 	}
-	if m.Environment != nil {
+	if len(m.Environment) > 0 {
 		dAtA[i] = 0x1a
 		i++
-		i = encodeVarintPeer(dAtA, i, uint64(len(*m.Environment)))
-		i += copy(dAtA[i:], *m.Environment)
+		i = encodeVarintPeer(dAtA, i, uint64(len(m.Environment)))
+		i += copy(dAtA[i:], m.Environment)
 	}
-	if m.ServerId == nil {
-		return 0, new(github_com_golang_protobuf_proto.RequiredNotSetError)
-	} else {
+	if len(m.ServerId) > 0 {
 		dAtA[i] = 0x22
 		i++
-		i = encodeVarintPeer(dAtA, i, uint64(len(*m.ServerId)))
-		i += copy(dAtA[i:], *m.ServerId)
+		i = encodeVarintPeer(dAtA, i, uint64(len(m.ServerId)))
+		i += copy(dAtA[i:], m.ServerId)
 	}
-	if m.Hostname != nil {
+	if len(m.Hostname) > 0 {
 		dAtA[i] = 0x2a
 		i++
-		i = encodeVarintPeer(dAtA, i, uint64(len(*m.Hostname)))
-		i += copy(dAtA[i:], *m.Hostname)
+		i = encodeVarintPeer(dAtA, i, uint64(len(m.Hostname)))
+		i += copy(dAtA[i:], m.Hostname)
 	}
-	if m.Datacenter != nil {
+	if len(m.Datacenter) > 0 {
 		dAtA[i] = 0x32
 		i++
-		i = encodeVarintPeer(dAtA, i, uint64(len(*m.Datacenter)))
-		i += copy(dAtA[i:], *m.Datacenter)
+		i = encodeVarintPeer(dAtA, i, uint64(len(m.Datacenter)))
+		i += copy(dAtA[i:], m.Datacenter)
 	}
-	if m.Rack != nil {
+	if len(m.Rack) > 0 {
 		dAtA[i] = 0x3a
 		i++
-		i = encodeVarintPeer(dAtA, i, uint64(len(*m.Rack)))
-		i += copy(dAtA[i:], *m.Rack)
+		i = encodeVarintPeer(dAtA, i, uint64(len(m.Rack)))
+		i += copy(dAtA[i:], m.Rack)
 	}
-	if m.TimeChecked != nil {
+	if m.TimeChecked != 0 {
 		dAtA[i] = 0x40
 		i++
-		i = encodeVarintPeer(dAtA, i, uint64(*m.TimeChecked))
+		i = encodeVarintPeer(dAtA, i, uint64(m.TimeChecked))
 	}
-	if m.TimeUp != nil {
+	if m.TimeUp != 0 {
 		dAtA[i] = 0x48
 		i++
-		i = encodeVarintPeer(dAtA, i, uint64(*m.TimeUp))
+		i = encodeVarintPeer(dAtA, i, uint64(m.TimeUp))
 	}
-	if m.TimeCreated != nil {
+	if m.TimeCreated != 0 {
 		dAtA[i] = 0x50
 		i++
-		i = encodeVarintPeer(dAtA, i, uint64(*m.TimeCreated))
+		i = encodeVarintPeer(dAtA, i, uint64(m.TimeCreated))
 	}
-	if m.TimeConf != nil {
+	if m.TimeConf != 0 {
 		dAtA[i] = 0x58
 		i++
-		i = encodeVarintPeer(dAtA, i, uint64(*m.TimeConf))
+		i = encodeVarintPeer(dAtA, i, uint64(m.TimeConf))
 	}
-	if m.Via != nil {
+	if len(m.Via) > 0 {
 		dAtA[i] = 0x8a
 		i++
 		dAtA[i] = 0x1
 		i++
-		i = encodeVarintPeer(dAtA, i, uint64(len(*m.Via)))
-		i += copy(dAtA[i:], *m.Via)
+		i = encodeVarintPeer(dAtA, i, uint64(len(m.Via)))
+		i += copy(dAtA[i:], m.Via)
 	}
 	if len(m.NetInfo) > 0 {
 		for _, msg := range m.NetInfo {
@@ -385,12 +375,12 @@ func (m *NetInfo) Size() (n int) {
 	}
 	var l int
 	_ = l
-	if m.Addr != nil {
-		l = len(*m.Addr)
+	l = len(m.Addr)
+	if l > 0 {
 		n += 1 + l + sovPeer(uint64(l))
 	}
-	if m.Natdom != nil {
-		l = len(*m.Natdom)
+	l = len(m.Natdom)
+	if l > 0 {
 		n += 1 + l + sovPeer(uint64(l))
 	}
 	if m.XXX_unrecognized != nil {
@@ -405,47 +395,47 @@ func (m *PeerInfo) Size() (n int) {
 	}
 	var l int
 	_ = l
-	if m.StatusCode != nil {
-		n += 1 + sovPeer(uint64(*m.StatusCode))
+	if m.StatusCode != 0 {
+		n += 1 + sovPeer(uint64(m.StatusCode))
 	}
-	if m.Subsystem != nil {
-		l = len(*m.Subsystem)
+	l = len(m.Subsystem)
+	if l > 0 {
 		n += 1 + l + sovPeer(uint64(l))
 	}
-	if m.Environment != nil {
-		l = len(*m.Environment)
+	l = len(m.Environment)
+	if l > 0 {
 		n += 1 + l + sovPeer(uint64(l))
 	}
-	if m.ServerId != nil {
-		l = len(*m.ServerId)
+	l = len(m.ServerId)
+	if l > 0 {
 		n += 1 + l + sovPeer(uint64(l))
 	}
-	if m.Hostname != nil {
-		l = len(*m.Hostname)
+	l = len(m.Hostname)
+	if l > 0 {
 		n += 1 + l + sovPeer(uint64(l))
 	}
-	if m.Datacenter != nil {
-		l = len(*m.Datacenter)
+	l = len(m.Datacenter)
+	if l > 0 {
 		n += 1 + l + sovPeer(uint64(l))
 	}
-	if m.Rack != nil {
-		l = len(*m.Rack)
+	l = len(m.Rack)
+	if l > 0 {
 		n += 1 + l + sovPeer(uint64(l))
 	}
-	if m.TimeChecked != nil {
-		n += 1 + sovPeer(uint64(*m.TimeChecked))
+	if m.TimeChecked != 0 {
+		n += 1 + sovPeer(uint64(m.TimeChecked))
 	}
-	if m.TimeUp != nil {
-		n += 1 + sovPeer(uint64(*m.TimeUp))
+	if m.TimeUp != 0 {
+		n += 1 + sovPeer(uint64(m.TimeUp))
 	}
-	if m.TimeCreated != nil {
-		n += 1 + sovPeer(uint64(*m.TimeCreated))
+	if m.TimeCreated != 0 {
+		n += 1 + sovPeer(uint64(m.TimeCreated))
 	}
-	if m.TimeConf != nil {
-		n += 1 + sovPeer(uint64(*m.TimeConf))
+	if m.TimeConf != 0 {
+		n += 1 + sovPeer(uint64(m.TimeConf))
 	}
-	if m.Via != nil {
-		l = len(*m.Via)
+	l = len(m.Via)
+	if l > 0 {
 		n += 2 + l + sovPeer(uint64(l))
 	}
 	if len(m.NetInfo) > 0 {
@@ -474,7 +464,6 @@ func sozPeer(x uint64) (n int) {
 	return sovPeer(uint64((x << 1) ^ uint64((int64(x) >> 63))))
 }
 func (m *NetInfo) Unmarshal(dAtA []byte) error {
-	var hasFields [1]uint64
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -530,10 +519,8 @@ func (m *NetInfo) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			s := string(dAtA[iNdEx:postIndex])
-			m.Addr = &s
+			m.Addr = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-			hasFields[0] |= uint64(0x00000001)
 		case 2:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Natdom", wireType)
@@ -561,8 +548,7 @@ func (m *NetInfo) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			s := string(dAtA[iNdEx:postIndex])
-			m.Natdom = &s
+			m.Natdom = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
@@ -580,9 +566,6 @@ func (m *NetInfo) Unmarshal(dAtA []byte) error {
 			iNdEx += skippy
 		}
 	}
-	if hasFields[0]&uint64(0x00000001) == 0 {
-		return new(github_com_golang_protobuf_proto.RequiredNotSetError)
-	}
 
 	if iNdEx > l {
 		return io.ErrUnexpectedEOF
@@ -590,7 +573,6 @@ func (m *NetInfo) Unmarshal(dAtA []byte) error {
 	return nil
 }
 func (m *PeerInfo) Unmarshal(dAtA []byte) error {
-	var hasFields [1]uint64
 	l := len(dAtA)
 	iNdEx := 0
 	for iNdEx < l {
@@ -623,7 +605,7 @@ func (m *PeerInfo) Unmarshal(dAtA []byte) error {
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field StatusCode", wireType)
 			}
-			var v int32
+			m.StatusCode = 0
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowPeer
@@ -633,13 +615,11 @@ func (m *PeerInfo) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				v |= (int32(b) & 0x7F) << shift
+				m.StatusCode |= (int32(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			m.StatusCode = &v
-			hasFields[0] |= uint64(0x00000001)
 		case 2:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Subsystem", wireType)
@@ -667,10 +647,8 @@ func (m *PeerInfo) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			s := string(dAtA[iNdEx:postIndex])
-			m.Subsystem = &s
+			m.Subsystem = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-			hasFields[0] |= uint64(0x00000002)
 		case 3:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Environment", wireType)
@@ -698,8 +676,7 @@ func (m *PeerInfo) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			s := string(dAtA[iNdEx:postIndex])
-			m.Environment = &s
+			m.Environment = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 4:
 			if wireType != 2 {
@@ -728,10 +705,8 @@ func (m *PeerInfo) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			s := string(dAtA[iNdEx:postIndex])
-			m.ServerId = &s
+			m.ServerId = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
-			hasFields[0] |= uint64(0x00000004)
 		case 5:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Hostname", wireType)
@@ -759,8 +734,7 @@ func (m *PeerInfo) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			s := string(dAtA[iNdEx:postIndex])
-			m.Hostname = &s
+			m.Hostname = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 6:
 			if wireType != 2 {
@@ -789,8 +763,7 @@ func (m *PeerInfo) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			s := string(dAtA[iNdEx:postIndex])
-			m.Datacenter = &s
+			m.Datacenter = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 7:
 			if wireType != 2 {
@@ -819,14 +792,13 @@ func (m *PeerInfo) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			s := string(dAtA[iNdEx:postIndex])
-			m.Rack = &s
+			m.Rack = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 8:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field TimeChecked", wireType)
 			}
-			var v uint64
+			m.TimeChecked = 0
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowPeer
@@ -836,17 +808,16 @@ func (m *PeerInfo) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				v |= (uint64(b) & 0x7F) << shift
+				m.TimeChecked |= (uint64(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			m.TimeChecked = &v
 		case 9:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field TimeUp", wireType)
 			}
-			var v uint64
+			m.TimeUp = 0
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowPeer
@@ -856,17 +827,16 @@ func (m *PeerInfo) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				v |= (uint64(b) & 0x7F) << shift
+				m.TimeUp |= (uint64(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			m.TimeUp = &v
 		case 10:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field TimeCreated", wireType)
 			}
-			var v uint64
+			m.TimeCreated = 0
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowPeer
@@ -876,17 +846,16 @@ func (m *PeerInfo) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				v |= (uint64(b) & 0x7F) << shift
+				m.TimeCreated |= (uint64(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			m.TimeCreated = &v
 		case 11:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field TimeConf", wireType)
 			}
-			var v uint64
+			m.TimeConf = 0
 			for shift := uint(0); ; shift += 7 {
 				if shift >= 64 {
 					return ErrIntOverflowPeer
@@ -896,12 +865,11 @@ func (m *PeerInfo) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				v |= (uint64(b) & 0x7F) << shift
+				m.TimeConf |= (uint64(b) & 0x7F) << shift
 				if b < 0x80 {
 					break
 				}
 			}
-			m.TimeConf = &v
 		case 17:
 			if wireType != 2 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Via", wireType)
@@ -929,8 +897,7 @@ func (m *PeerInfo) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			s := string(dAtA[iNdEx:postIndex])
-			m.Via = &s
+			m.Via = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
 		case 20:
 			if wireType != 2 {
@@ -978,15 +945,6 @@ func (m *PeerInfo) Unmarshal(dAtA []byte) error {
 			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
 			iNdEx += skippy
 		}
-	}
-	if hasFields[0]&uint64(0x00000001) == 0 {
-		return new(github_com_golang_protobuf_proto.RequiredNotSetError)
-	}
-	if hasFields[0]&uint64(0x00000002) == 0 {
-		return new(github_com_golang_protobuf_proto.RequiredNotSetError)
-	}
-	if hasFields[0]&uint64(0x00000004) == 0 {
-		return new(github_com_golang_protobuf_proto.RequiredNotSetError)
 	}
 
 	if iNdEx > l {
@@ -1099,30 +1057,30 @@ var (
 	ErrIntOverflowPeer   = fmt.Errorf("proto: integer overflow")
 )
 
-func init() { proto.RegisterFile("peer.proto", fileDescriptor_peer_d4a20dbc36d3d920) }
+func init() { proto.RegisterFile("peer.proto", fileDescriptor_peer_330eea082c9f36ee) }
 
-var fileDescriptor_peer_d4a20dbc36d3d920 = []byte{
-	// 346 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x4c, 0x91, 0xcf, 0x6a, 0xe3, 0x30,
-	0x10, 0xc6, 0xd7, 0x71, 0xe2, 0x3f, 0xe3, 0x85, 0xcd, 0x8a, 0x65, 0x2b, 0xda, 0xe2, 0xba, 0x39,
-	0x99, 0x1e, 0x72, 0x28, 0xf4, 0x05, 0x9a, 0x53, 0x2e, 0xa5, 0x18, 0x7a, 0x36, 0x8a, 0x35, 0x26,
-	0x26, 0x58, 0x32, 0xb2, 0x12, 0x68, 0x1f, 0xa3, 0xa7, 0x3e, 0x52, 0x8f, 0x7d, 0x84, 0x92, 0xbe,
-	0x48, 0xf1, 0x28, 0x34, 0xb9, 0x7d, 0xf3, 0xfb, 0xe6, 0x1b, 0x69, 0x18, 0x80, 0x0e, 0xd1, 0xcc,
-	0x3b, 0xa3, 0xad, 0x66, 0xc1, 0xa6, 0x59, 0x35, 0xf6, 0x65, 0x76, 0x07, 0xe1, 0x03, 0xda, 0xa5,
-	0xaa, 0x35, 0x63, 0x30, 0x16, 0x52, 0x1a, 0xee, 0x65, 0xa3, 0x3c, 0x2e, 0x48, 0xb3, 0xff, 0x10,
-	0x28, 0x61, 0xa5, 0x6e, 0xf9, 0x28, 0xf3, 0xf2, 0xb8, 0x38, 0x54, 0xb3, 0x57, 0x1f, 0xa2, 0x47,
-	0x44, 0x43, 0xc1, 0x2b, 0x48, 0x7a, 0x2b, 0xec, 0xb6, 0x2f, 0x2b, 0x2d, 0x91, 0xf2, 0x93, 0x02,
-	0x1c, 0x5a, 0x68, 0x89, 0xec, 0x12, 0xe2, 0x7e, 0xbb, 0xea, 0x9f, 0x7b, 0x8b, 0xc3, 0xa0, 0x61,
-	0xfc, 0x11, 0xb0, 0x0c, 0x12, 0x54, 0xbb, 0xc6, 0x68, 0xd5, 0xa2, 0xb2, 0xdc, 0xa7, 0x87, 0x4e,
-	0x11, 0xbb, 0x80, 0xb8, 0x47, 0xb3, 0x43, 0x53, 0x36, 0x92, 0x8f, 0x29, 0x1f, 0x39, 0xb0, 0x94,
-	0xec, 0x1c, 0xa2, 0xb5, 0xee, 0xad, 0x12, 0x2d, 0xf2, 0x09, 0x65, 0x7f, 0x6a, 0x96, 0x02, 0x48,
-	0x61, 0x45, 0x85, 0xca, 0xa2, 0xe1, 0x01, 0xb9, 0x27, 0x64, 0x58, 0xd9, 0x88, 0x6a, 0xc3, 0x43,
-	0x72, 0x48, 0xb3, 0x6b, 0xf8, 0x6d, 0x9b, 0x16, 0xcb, 0x6a, 0x8d, 0xd5, 0x06, 0x25, 0x8f, 0x32,
-	0x2f, 0x1f, 0x17, 0xc9, 0xc0, 0x16, 0x0e, 0xb1, 0x33, 0x08, 0xa9, 0x65, 0xdb, 0xf1, 0x98, 0xdc,
-	0x60, 0x28, 0x9f, 0xba, 0x63, 0xd6, 0xa0, 0xb0, 0x28, 0x39, 0x9c, 0x64, 0x1d, 0x1a, 0x76, 0x71,
-	0x2d, 0x5a, 0xd5, 0x3c, 0x21, 0x3f, 0x22, 0x5f, 0xab, 0x9a, 0x4d, 0xc1, 0xdf, 0x35, 0x82, 0xff,
-	0xa5, 0xef, 0x0c, 0x92, 0xdd, 0x40, 0xa4, 0xd0, 0x96, 0x8d, 0xaa, 0x35, 0xff, 0x97, 0xf9, 0x79,
-	0x72, 0xfb, 0x67, 0xee, 0x4e, 0x37, 0x3f, 0xdc, 0xad, 0x08, 0x95, 0x13, 0xf7, 0xd3, 0xf7, 0x7d,
-	0xea, 0x7d, 0xec, 0x53, 0xef, 0x73, 0x9f, 0x7a, 0x6f, 0x5f, 0xe9, 0xaf, 0xef, 0x00, 0x00, 0x00,
-	0xff, 0xff, 0xf6, 0xaa, 0xc3, 0x07, 0xf2, 0x01, 0x00, 0x00,
+var fileDescriptor_peer_330eea082c9f36ee = []byte{
+	// 345 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x4c, 0x91, 0xcf, 0x4a, 0xeb, 0x40,
+	0x14, 0xc6, 0x6f, 0x6e, 0xda, 0xfc, 0x39, 0xb9, 0x70, 0xeb, 0x20, 0x3a, 0xa8, 0xc4, 0xd8, 0x55,
+	0x71, 0xd1, 0x85, 0xe2, 0x0b, 0xd8, 0x55, 0x37, 0x22, 0x01, 0xd7, 0x61, 0x9a, 0x39, 0xa1, 0xa1,
+	0x64, 0x26, 0x4c, 0x4e, 0x0b, 0xfa, 0x18, 0xae, 0x7c, 0x24, 0x97, 0x3e, 0x82, 0xd4, 0x17, 0x91,
+	0xcc, 0xb4, 0xb4, 0xbb, 0xef, 0xfc, 0x7e, 0xf3, 0x85, 0x1c, 0x0e, 0x40, 0x8b, 0x68, 0xa6, 0xad,
+	0xd1, 0xa4, 0x59, 0xb0, 0xaa, 0x17, 0x35, 0xbd, 0x8d, 0x1f, 0x20, 0x7c, 0x42, 0x9a, 0xab, 0x4a,
+	0x33, 0x06, 0x03, 0x21, 0xa5, 0xe1, 0x5e, 0xe6, 0x4d, 0xe2, 0xdc, 0x66, 0x76, 0x06, 0x81, 0x12,
+	0x24, 0x75, 0xc3, 0xff, 0x5a, 0xba, 0x9b, 0xc6, 0xef, 0x3e, 0x44, 0xcf, 0x88, 0xc6, 0x16, 0xaf,
+	0x21, 0xe9, 0x48, 0xd0, 0xba, 0x2b, 0x4a, 0x2d, 0xd1, 0xf6, 0x87, 0x39, 0x38, 0x34, 0xd3, 0x12,
+	0xd9, 0x15, 0xc4, 0xdd, 0x7a, 0xd1, 0xbd, 0x76, 0x84, 0xfb, 0x0f, 0x1d, 0x00, 0xcb, 0x20, 0x41,
+	0xb5, 0xa9, 0x8d, 0x56, 0x0d, 0x2a, 0xe2, 0xbe, 0xf5, 0xc7, 0x88, 0x5d, 0x42, 0xdc, 0xa1, 0xd9,
+	0xa0, 0x29, 0x6a, 0xc9, 0x07, 0xd6, 0x47, 0x0e, 0xcc, 0x25, 0xbb, 0x80, 0x68, 0xa9, 0x3b, 0x52,
+	0xa2, 0x41, 0x3e, 0x74, 0x6e, 0x3f, 0xb3, 0x14, 0x40, 0x0a, 0x12, 0x25, 0x2a, 0x42, 0xc3, 0x03,
+	0x6b, 0x8f, 0x48, 0xbf, 0xb2, 0x11, 0xe5, 0x8a, 0x87, 0x6e, 0xe5, 0x3e, 0xb3, 0x1b, 0xf8, 0x47,
+	0x75, 0x83, 0x45, 0xb9, 0xc4, 0x72, 0x85, 0x92, 0x47, 0x99, 0x37, 0x19, 0xe4, 0x49, 0xcf, 0x66,
+	0x0e, 0xb1, 0x73, 0x08, 0xed, 0x93, 0x75, 0xcb, 0x63, 0x6b, 0x83, 0x7e, 0x7c, 0x69, 0x0f, 0x5d,
+	0x83, 0x82, 0x50, 0x72, 0x38, 0xea, 0x3a, 0xd4, 0xef, 0xe2, 0x9e, 0x68, 0x55, 0xf1, 0xc4, 0xfa,
+	0xc8, 0x7a, 0xad, 0x2a, 0x36, 0x02, 0x7f, 0x53, 0x0b, 0x7e, 0x62, 0x7f, 0xa7, 0x8f, 0xec, 0x16,
+	0x22, 0x85, 0x54, 0xd4, 0xaa, 0xd2, 0xfc, 0x34, 0xf3, 0x27, 0xc9, 0xdd, 0xff, 0xa9, 0x3b, 0xdd,
+	0x74, 0x77, 0xb7, 0x3c, 0x54, 0x2e, 0x3c, 0x8e, 0x3e, 0xb7, 0xa9, 0xf7, 0xb5, 0x4d, 0xbd, 0xef,
+	0x6d, 0xea, 0x7d, 0xfc, 0xa4, 0x7f, 0x16, 0x81, 0x3d, 0xf6, 0xfd, 0x6f, 0x00, 0x00, 0x00, 0xff,
+	0xff, 0x03, 0xb7, 0x7f, 0x67, 0xfa, 0x01, 0x00, 0x00,
 }

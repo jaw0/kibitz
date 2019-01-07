@@ -111,7 +111,7 @@ func (p *Peer) Update(px PeerImport, pdb *DB) {
 	if len(via) > MAXVIA {
 		via = via[:MAXVIA]
 	}
-	pi.Via = &via
+	pi.Via = via
 
 	// trap any invalid access
 	px.SetPeerInfo(nil)
@@ -130,8 +130,8 @@ func (p *Peer) SetIsUp(now lamport.Time) {
 	p.lastTry = time.Now()
 
 	t := now.Uint64()
-	p.info.TimeUp = &t
-	p.info.TimeChecked = &t
+	p.info.TimeUp = t
+	p.info.TimeChecked = t
 
 	p.changeStatus(STATUS_UP, false)
 }
@@ -145,7 +145,7 @@ func (p *Peer) SetMaybeDn(now lamport.Time) {
 	p.lastTry = time.Now()
 
 	t := now.Uint64()
-	p.info.TimeChecked = &t
+	p.info.TimeChecked = t
 
 	if p.numFail > MAXFAIL || p.status == STATUS_DOWN {
 		p.changeStatus(STATUS_DOWN, false)
