@@ -14,8 +14,8 @@ import (
 )
 
 const (
-	KEEPDOWN = uint64(10 * time.Minute) // keep data about down servers for how long?
-	KEEPLOST = uint64(10 * time.Minute) // keep data about servers we have not heard about for how long?
+	KEEPDOWN = 10 * lamport.Minute // keep data about down servers for how long?
+	KEEPLOST = 10 * lamport.Minute // keep data about servers we have not heard about for how long?
 )
 
 var serverupds = expvar.NewInt("kibitz_server_updates")

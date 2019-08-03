@@ -1,7 +1,7 @@
 // Copyright (c) 2018
 // Author: Jeff Weisberg <jaw @ tcp4me.com>
 // Created: 2018-Aug-05 13:30 (EDT)
-// Function: lamport clock that loosely tracks unix time
+// Function: lamport clock that loosely tracks unix nano time
 
 package lamport
 
@@ -11,6 +11,11 @@ import (
 )
 
 type Time uint64
+
+const (
+	Second = uint64(time.Second)
+	Minute = uint64(time.Minute)
+)
 
 type Clock struct {
 	lock sync.Mutex
