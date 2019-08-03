@@ -74,7 +74,8 @@ func (pdb *DB) MyInfo() *PeerInfo {
 		NetInfo:     pdb.netinfo,
 		TimeCreated: now,
 		TimeChecked: now,
-		TimeUp:      now,
+		TimeLastUp:  now,
+		TimeUpSince: pdb.bootTime,
 		TimeConf:    pdb.bootTime,
 		Via:         viaDot,
 	}

@@ -231,29 +231,29 @@ func (pdb *DB) PeerDn(id string) {
 
 // ################################################################
 
-func (pdb *DB) isOK(p *PeerInfo) bool {
+func (pdb *DB) isOK(pi *PeerInfo) bool {
 
 	now := pdb.clock.Now().Uint64()
 
-	if p.GetServerId() == pdb.id {
+	if pi.GetServerId() == pdb.id {
 		// NB - updates about ourself get discarded here
 		return false
 	}
-	if p.GetSubsystem() != pdb.sys && !pdb.promiscuous {
-		dl.Debug("not ok - sys - %v", p)
+	if pi.GetSubsystem() != pdb.sys && !pdb.promiscuous {
+		dl.Debug("not ok - sys - %v", pi)
 		return false
 	}
-	if p.GetEnvironment() != pdb.env {
-		dl.Debug("not ok - env - %v", p)
+	if pi.GetEnvironment() != pdb.env {
+		dl.Debug("not ok - env - %v", pi)
 		return false
 	}
 
-	if p.GetTimeCreated() < now-KEEPLOST {
-		dl.Debug("not ok - Tchk - %v", p)
+	if pi.GetTimeCreated() < now-KEEPLOST {
+		dl.Debug("not ok - Tchk - %v", pi)
 		return false
 	}
-	if p.GetTimeUp() < now-KEEPDOWN {
-		dl.Debug("not ok - Tup - %v", p)
+	if pi.GetTimeLastUp() < now-KEEPDOWN {
+		dl.Debug("not ok - Tup - %v", pi)
 		return false
 	}
 

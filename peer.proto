@@ -22,9 +22,10 @@ message PeerInfo {
 
         // lamport clocks (see lamport.go)
         uint64         time_checked    = 8;
-        uint64         time_up         = 9;
+        uint64         time_last_up    = 9;
         uint64         time_created    = 10;		// set by origin
         uint64         time_conf       = 11;
+        uint64         time_up_since   = 12;
 
         string         via             = 17;		// informational
         repeated NetInfo        net_info        = 20;

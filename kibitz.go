@@ -69,18 +69,18 @@ func (pdb *DB) getRandomPeer() *Peer {
 	nall := 0
 
 	for _, p := range pdb.kibitzers {
-
+		pe := p.GetExport()
 		nall++
 
-		if p.Status() == STATUS_MAYBEDN {
+		if pe.Status == STATUS_MAYBEDN {
 			check.maybe(p)
 		}
 
-		if p.GetLastTry().Before(oldLimit) {
+		if pe.LastTry.Before(oldLimit) {
 			old.maybe(p)
 		}
 
-		if p.GetDatacenter() == pdb.dc {
+		if pe.Datacenter == pdb.dc {
 			local.maybe(p)
 		} else {
 			away.maybe(p)
@@ -152,7 +152,7 @@ func (pdb *DB) useAddr(p *Peer) (string, string, string) {
 	public := &randNet{}
 	private := &randNet{}
 
-	for _, na := range p.GetAddrs() {
+	for _, na := range p.getAddrs() {
 		dom := na.GetNatdom()
 		isup, known := pdb.nmon.IsUp(dom)
 		if !known {
