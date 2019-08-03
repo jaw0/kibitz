@@ -46,18 +46,21 @@ type Peer struct {
 }
 
 type Export struct {
-	Netinfo    []*NetInfo
-	Id         string
-	Sys        string
-	Env        string
-	Hostname   string
-	Rack       string
-	Datacenter string
-	BestAddr   string
-	TimeUp     uint64
-	IsUp       bool
-	IsSameRack bool
-	IsSameDC   bool
+	Netinfo     []*NetInfo
+	Status      PeerStatus
+	Id          string
+	Sys         string
+	Env         string
+	Hostname    string
+	Rack        string
+	Datacenter  string
+	BestAddr    string
+	TimeLastUp  uint64
+	TimeUpSince uint64
+	LastTry     time.Time
+	IsUp        bool
+	IsSameRack  bool
+	IsSameDC    bool
 }
 
 func peerNew(pdb *DB, px PeerImport, st PeerStatus) *Peer {
@@ -130,8 +133,12 @@ func (p *Peer) SetIsUp(now lamport.Time) {
 	p.lastTry = time.Now()
 
 	t := now.Uint64()
-	p.info.TimeUp = t
+	p.info.TimeLastUp = t
 	p.info.TimeChecked = t
+
+	if p.status != STATUS_UP || p.info.TimeUpSince == 0 {
+		p.info.TimeUpSince = t
+	}
 
 	p.changeStatus(STATUS_UP, false)
 }
@@ -146,6 +153,7 @@ func (p *Peer) SetMaybeDn(now lamport.Time) {
 
 	t := now.Uint64()
 	p.info.TimeChecked = t
+	p.info.TimeUpSince = t
 
 	if p.numFail > MAXFAIL || p.status == STATUS_DOWN {
 		p.changeStatus(STATUS_DOWN, false)
@@ -215,6 +223,8 @@ func (p *Peer) figureBestAddr(pi *PeerInfo) string {
 	return best
 }
 
+// ################################################################
+
 func (p *Peer) GetData() interface{} {
 	p.lock.Lock()
 	defer p.lock.Unlock()
@@ -231,59 +241,50 @@ func (p *Peer) GetExport() *Export {
 	p.lock.Lock()
 	defer p.lock.Unlock()
 
+	pi := p.info
+
 	return &Export{
-		Id:         p.id,
-		Netinfo:    p.info.GetNetInfo(),
-		Sys:        p.info.GetSubsystem(),
-		Hostname:   p.info.GetHostname(),
-		Env:        p.info.GetEnvironment(),
-		Rack:       p.info.GetRack(),
-		Datacenter: p.info.GetDatacenter(),
-		IsUp:       (p.info.GetStatusCode() == int32(STATUS_UP)),
-		BestAddr:   p.bestAddr,
-		TimeUp:     p.info.GetTimeUp(),
-		IsSameRack: (p.info.GetRack() == p.pdb.rack),
-		IsSameDC:   (p.info.GetDatacenter() == p.pdb.dc),
+		Id:          p.id,
+		Status:      p.status,
+		Netinfo:     pi.GetNetInfo(),
+		Sys:         pi.GetSubsystem(),
+		Hostname:    pi.GetHostname(),
+		Env:         pi.GetEnvironment(),
+		Rack:        pi.GetRack(),
+		Datacenter:  pi.GetDatacenter(),
+		IsUp:        (pi.GetStatusCode() == int32(STATUS_UP)),
+		BestAddr:    p.bestAddr,
+		TimeLastUp:  pi.GetTimeLastUp(),
+		TimeUpSince: pi.GetTimeUpSince(),
+		LastTry:     p.lastTry,
+		IsSameRack:  (pi.GetRack() == p.pdb.rack),
+		IsSameDC:    (pi.GetDatacenter() == p.pdb.dc),
 	}
 }
 
 func (pdb *DB) GetExportSelf() *Export {
 
+	now := pdb.clock.Inc().Uint64()
+
 	return &Export{
-		Id:         pdb.id,
-		Env:        pdb.env,
-		Sys:        pdb.sys,
-		Netinfo:    pdb.netinfo,
-		Hostname:   pdb.host,
-		Rack:       pdb.rack,
-		Datacenter: pdb.dc,
-		IsUp:       true,
-		BestAddr:   pdb.bestaddr,
-		TimeUp:     pdb.clock.Inc().Uint64(),
-		IsSameRack: true,
-		IsSameDC:   true,
+		Id:          pdb.id,
+		Status:      STATUS_UP,
+		Env:         pdb.env,
+		Sys:         pdb.sys,
+		Netinfo:     pdb.netinfo,
+		Hostname:    pdb.host,
+		Rack:        pdb.rack,
+		Datacenter:  pdb.dc,
+		IsUp:        true,
+		BestAddr:    pdb.bestaddr,
+		TimeLastUp:  now,
+		TimeUpSince: now,
+		IsSameRack:  true,
+		IsSameDC:    true,
 	}
 }
 
-func (p *Peer) Status() PeerStatus {
-	p.lock.Lock()
-	defer p.lock.Unlock()
-
-	return p.status
-}
-
-func (p *Peer) GetLastTry() time.Time {
-	p.lock.Lock()
-	defer p.lock.Unlock()
-	return p.lastTry
-}
-func (p *Peer) GetDatacenter() string {
-	p.lock.Lock()
-	defer p.lock.Unlock()
-	return p.info.GetDatacenter()
-}
-
-func (p *Peer) GetAddrs() []*NetInfo {
+func (p *Peer) getAddrs() []*NetInfo {
 	p.lock.Lock()
 	defer p.lock.Unlock()
 
