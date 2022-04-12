@@ -21,7 +21,7 @@ const (
 var serverupds = expvar.NewInt("kibitz_server_updates")
 
 type infoer interface {
-	Send(string, time.Duration, *PeerInfo) (bool, error)
+	Send(string, time.Duration, *PeerInfo) ([]PeerImport, error)
 	Notify(string, bool, bool)
 }
 
