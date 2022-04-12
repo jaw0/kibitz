@@ -101,7 +101,12 @@ func (pdb *DB) getRandomPeer() *Peer {
 	maybeUse(usePeer, old.p, 5)
 
 	// then (maybe) something far away
-	if usePeer == nil && away.p != nil && random_n(5) == 0 {
+	k := 5
+	if local.count < 5 {
+		// not very many locally, use more far
+		k = 2
+	}
+	if usePeer == nil && away.p != nil && random_n(k) == 0 {
 		usePeer = away.p
 	}
 
