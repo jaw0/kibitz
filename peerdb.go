@@ -136,7 +136,7 @@ func (pdb *DB) Update(px PeerImport) {
 	case p == nil:
 		dl.Verbose("discovered new peer %s", pi.GetServerId())
 		p = peerNew(pdb, px, STATUS_UNKNOWN)
-		pdb.allpeers[p.id] = p
+		pdb.addPeer(p)
 
 	case p.status == STATUS_SCEPTICAL:
 		dl.Verbose("discovered new peer %s", pi.GetServerId())
@@ -274,14 +274,18 @@ func (pdb *DB) find(id string) *Peer {
 	return p
 }
 
-func (pdb *DB) upgrade(p *Peer) {
-
-	delete(pdb.skeptical, p.id)
+func (pdb *DB) addPeer(p *Peer) {
 
 	pdb.allpeers[p.id] = p
 	if pdb.sys == p.info.GetSubsystem() {
 		pdb.kibitzers[p.id] = p
 	}
+}
+
+func (pdb *DB) upgrade(p *Peer) {
+
+	delete(pdb.skeptical, p.id)
+	pdb.addPeer(p)
 }
 
 func (pdb *DB) kill(p *Peer) {
@@ -344,6 +348,24 @@ func (pdb *DB) GetAll() []*Peer {
 	}
 
 	return all
+}
+
+func (pdb *DB) ForAllData(fnc func(interface{})) {
+	pdb.lock.RLock()
+	defer pdb.lock.RUnlock()
+
+	for _, p := range pdb.allpeers {
+		fnc(p.GetData())
+	}
+}
+
+func (pdb *DB) ForAllExport(fnc func(*Export)) {
+	pdb.lock.RLock()
+	defer pdb.lock.RUnlock()
+
+	for _, p := range pdb.allpeers {
+		fnc(p.GetExport())
+	}
 }
 
 // ################################################################
