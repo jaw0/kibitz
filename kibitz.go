@@ -38,7 +38,9 @@ func (pdb *DB) kibitzWithRandomPeer() {
 
 	dl.Debug("kibitz with peer %s (%s)", peerAddr, peerId)
 
-	peerList, err := pdb.iface.Send(peerAddr, TIMEOUT, pdb.MyInfo())
+	myself := pdb.Myself()
+
+	peerList, err := pdb.iface.Send(peerAddr, TIMEOUT, myself)
 
 	if err != nil {
 		dl.Debug(" => down err %v", err)

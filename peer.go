@@ -193,7 +193,7 @@ func (p *Peer) changeStatus(st PeerStatus, changed bool) bool {
 
 	switch st {
 	case STATUS_UP, STATUS_DOWN, STATUS_DEAD:
-		go p.pdb.iface.Notify(p.id, st == STATUS_UP, p.info.GetSubsystem() == p.pdb.sys)
+		go p.pdb.iface.Change(p.id, st == STATUS_UP, p.info.GetSubsystem() == p.pdb.sys)
 		return true
 	}
 

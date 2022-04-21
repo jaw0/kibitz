@@ -62,6 +62,11 @@ func (pdb *DB) learnNetwork() {
 	}
 }
 
+func (pdb *DB) Myself() PeerImport {
+	info := pdb.MyInfo()
+	return pdb.iface.Myself(info)
+}
+
 func (pdb *DB) MyInfo() *PeerInfo {
 
 	now := pdb.clock.Inc().Uint64()

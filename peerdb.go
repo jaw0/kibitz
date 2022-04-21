@@ -21,8 +21,10 @@ const (
 var serverupds = expvar.NewInt("kibitz_server_updates")
 
 type infoer interface {
-	Send(string, time.Duration, *PeerInfo) ([]PeerImport, error)
-	Notify(string, bool, bool)
+	Send(string, time.Duration, PeerImport) ([]PeerImport, error)
+	Change(string, bool, bool)
+	Update(string, bool, bool)
+	Myself(*PeerInfo) PeerImport
 }
 
 type Conf struct {
@@ -148,6 +150,8 @@ func (pdb *DB) Update(px PeerImport) {
 
 	// update status
 	p.Update(px, pdb)
+
+	go pdb.iface.Update(pi.GetServerId(), p.status == STATUS_UP, p.info.GetSubsystem() == p.pdb.sys)
 }
 
 // their reports
@@ -350,13 +354,16 @@ func (pdb *DB) GetAll() []*Peer {
 	return all
 }
 
-func (pdb *DB) ForAllData(fnc func(interface{})) {
+func (pdb *DB) ForAllData(fnc func(string, bool, interface{})) {
 	pdb.lock.RLock()
 	defer pdb.lock.RUnlock()
 
 	for _, p := range pdb.allpeers {
-		fnc(p.GetData())
+		fnc(p.id, p.status == STATUS_UP, p.GetData())
 	}
+
+	// and myself
+	fnc(pdb.id, true, pdb.Myself())
 }
 
 func (pdb *DB) ForAllExport(fnc func(*Export)) {
