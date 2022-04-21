@@ -3,11 +3,13 @@
 
 package kibitz
 
-import proto "github.com/golang/protobuf/proto"
-import fmt "fmt"
-import math "math"
-
-import io "io"
+import (
+	fmt "fmt"
+	proto "github.com/golang/protobuf/proto"
+	io "io"
+	math "math"
+	math_bits "math/bits"
+)
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -18,7 +20,7 @@ var _ = math.Inf
 // is compatible with the proto package it is being compiled against.
 // A compilation error at this line likely means your copy of the
 // proto package needs to be updated.
-const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
+const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
 type NetInfo struct {
 	Addr                 string   `protobuf:"bytes,1,opt,name=addr,proto3" json:"addr,omitempty"`
@@ -32,7 +34,7 @@ func (m *NetInfo) Reset()         { *m = NetInfo{} }
 func (m *NetInfo) String() string { return proto.CompactTextString(m) }
 func (*NetInfo) ProtoMessage()    {}
 func (*NetInfo) Descriptor() ([]byte, []int) {
-	return fileDescriptor_peer_a9dd1329bec5f705, []int{0}
+	return fileDescriptor_055ae5a865fc1c9e, []int{0}
 }
 func (m *NetInfo) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -42,15 +44,15 @@ func (m *NetInfo) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 		return xxx_messageInfo_NetInfo.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (dst *NetInfo) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_NetInfo.Merge(dst, src)
+func (m *NetInfo) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_NetInfo.Merge(m, src)
 }
 func (m *NetInfo) XXX_Size() int {
 	return m.Size()
@@ -90,7 +92,7 @@ type PeerInfo struct {
 	TimeConf             uint64     `protobuf:"varint,11,opt,name=time_conf,json=timeConf,proto3" json:"time_conf,omitempty"`
 	TimeUpSince          uint64     `protobuf:"varint,12,opt,name=time_up_since,json=timeUpSince,proto3" json:"time_up_since,omitempty"`
 	Via                  string     `protobuf:"bytes,17,opt,name=via,proto3" json:"via,omitempty"`
-	NetInfo              []*NetInfo `protobuf:"bytes,20,rep,name=net_info,json=netInfo" json:"net_info,omitempty"`
+	NetInfo              []*NetInfo `protobuf:"bytes,20,rep,name=net_info,json=netInfo,proto3" json:"net_info,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}   `json:"-"`
 	XXX_unrecognized     []byte     `json:"-"`
 	XXX_sizecache        int32      `json:"-"`
@@ -100,7 +102,7 @@ func (m *PeerInfo) Reset()         { *m = PeerInfo{} }
 func (m *PeerInfo) String() string { return proto.CompactTextString(m) }
 func (*PeerInfo) ProtoMessage()    {}
 func (*PeerInfo) Descriptor() ([]byte, []int) {
-	return fileDescriptor_peer_a9dd1329bec5f705, []int{1}
+	return fileDescriptor_055ae5a865fc1c9e, []int{1}
 }
 func (m *PeerInfo) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -110,15 +112,15 @@ func (m *PeerInfo) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 		return xxx_messageInfo_PeerInfo.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
 		return b[:n], nil
 	}
 }
-func (dst *PeerInfo) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_PeerInfo.Merge(dst, src)
+func (m *PeerInfo) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PeerInfo.Merge(m, src)
 }
 func (m *PeerInfo) XXX_Size() int {
 	return m.Size()
@@ -231,10 +233,40 @@ func init() {
 	proto.RegisterType((*NetInfo)(nil), "kibitz.NetInfo")
 	proto.RegisterType((*PeerInfo)(nil), "kibitz.PeerInfo")
 }
+
+func init() { proto.RegisterFile("peer.proto", fileDescriptor_055ae5a865fc1c9e) }
+
+var fileDescriptor_055ae5a865fc1c9e = []byte{
+	// 368 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x4c, 0x92, 0xc1, 0xea, 0xd3, 0x40,
+	0x10, 0xc6, 0x8d, 0x69, 0xd3, 0x64, 0x52, 0xb1, 0x2e, 0x22, 0x8b, 0x4a, 0x8c, 0x3d, 0x15, 0x0f,
+	0x3d, 0x28, 0xbe, 0x80, 0x3d, 0x15, 0x44, 0x24, 0xd2, 0x73, 0xd8, 0x66, 0x27, 0x74, 0xa9, 0xd9,
+	0x0d, 0xbb, 0x93, 0x82, 0x3e, 0x89, 0x6f, 0xe3, 0xd5, 0xa3, 0x8f, 0x20, 0xf5, 0x45, 0xfe, 0x64,
+	0xb7, 0xa5, 0xbd, 0x7d, 0xf3, 0xfb, 0x66, 0x3e, 0x76, 0x98, 0x05, 0xe8, 0x11, 0xed, 0xba, 0xb7,
+	0x86, 0x0c, 0x4b, 0x8e, 0x6a, 0xaf, 0xe8, 0xe7, 0xf2, 0x23, 0xcc, 0xbe, 0x20, 0x6d, 0x75, 0x6b,
+	0x18, 0x83, 0x89, 0x90, 0xd2, 0xf2, 0xa8, 0x8c, 0x56, 0x59, 0xe5, 0x35, 0x7b, 0x01, 0x89, 0x16,
+	0x24, 0x4d, 0xc7, 0x1f, 0x7b, 0x7a, 0xa9, 0x96, 0xbf, 0x63, 0x48, 0xbf, 0x22, 0x5a, 0x3f, 0xf8,
+	0x06, 0x72, 0x47, 0x82, 0x06, 0x57, 0x37, 0x46, 0xa2, 0x9f, 0x9f, 0x56, 0x10, 0xd0, 0xc6, 0x48,
+	0x64, 0xaf, 0x21, 0x73, 0xc3, 0xde, 0xfd, 0x70, 0x84, 0xd7, 0xa0, 0x1b, 0x60, 0x25, 0xe4, 0xa8,
+	0x4f, 0xca, 0x1a, 0xdd, 0xa1, 0x26, 0x1e, 0x7b, 0xff, 0x1e, 0xb1, 0x57, 0x90, 0x39, 0xb4, 0x27,
+	0xb4, 0xb5, 0x92, 0x7c, 0xe2, 0xfd, 0x34, 0x80, 0xad, 0x64, 0x2f, 0x21, 0x3d, 0x18, 0x47, 0x5a,
+	0x74, 0xc8, 0xa7, 0xc1, 0xbb, 0xd6, 0xac, 0x00, 0x90, 0x82, 0x44, 0x83, 0x9a, 0xd0, 0xf2, 0xc4,
+	0xbb, 0x77, 0x64, 0x5c, 0xd9, 0x8a, 0xe6, 0xc8, 0x67, 0x61, 0xe5, 0x51, 0xb3, 0xb7, 0x30, 0x27,
+	0xd5, 0x61, 0xdd, 0x1c, 0xb0, 0x39, 0xa2, 0xe4, 0x69, 0x19, 0xad, 0x26, 0x55, 0x3e, 0xb2, 0x4d,
+	0x40, 0xac, 0xbc, 0xb4, 0x7c, 0x17, 0x8e, 0xea, 0xa1, 0xe7, 0x99, 0x6f, 0x81, 0x91, 0x7d, 0x16,
+	0x8e, 0x76, 0xfd, 0x2d, 0xc4, 0xa2, 0x20, 0x94, 0x1c, 0xee, 0x42, 0x02, 0x1a, 0x97, 0x0a, 0x2d,
+	0x46, 0xb7, 0x3c, 0xf7, 0x7e, 0xea, 0x7d, 0xa3, 0x5b, 0xb6, 0x84, 0x27, 0xde, 0x1c, 0xfa, 0xda,
+	0x29, 0xdd, 0x20, 0x9f, 0xdf, 0x02, 0x76, 0xfd, 0xb7, 0x11, 0xb1, 0x05, 0xc4, 0x27, 0x25, 0xf8,
+	0x33, 0xff, 0xf6, 0x51, 0xb2, 0x77, 0x90, 0x6a, 0xa4, 0x5a, 0xe9, 0xd6, 0xf0, 0xe7, 0x65, 0xbc,
+	0xca, 0xdf, 0x3f, 0x5d, 0x87, 0x3b, 0xaf, 0x2f, 0x47, 0xae, 0x66, 0x3a, 0x88, 0x4f, 0x8b, 0x3f,
+	0xe7, 0x22, 0xfa, 0x7b, 0x2e, 0xa2, 0x7f, 0xe7, 0x22, 0xfa, 0xf5, 0xbf, 0x78, 0xb4, 0x4f, 0xfc,
+	0xcf, 0xf8, 0xf0, 0x10, 0x00, 0x00, 0xff, 0xff, 0xc8, 0x83, 0x26, 0x07, 0x27, 0x02, 0x00, 0x00,
+}
+
 func (m *NetInfo) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -242,32 +274,40 @@ func (m *NetInfo) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *NetInfo) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *NetInfo) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.Addr) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintPeer(dAtA, i, uint64(len(m.Addr)))
-		i += copy(dAtA[i:], m.Addr)
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if len(m.Natdom) > 0 {
-		dAtA[i] = 0x12
-		i++
+		i -= len(m.Natdom)
+		copy(dAtA[i:], m.Natdom)
 		i = encodeVarintPeer(dAtA, i, uint64(len(m.Natdom)))
-		i += copy(dAtA[i:], m.Natdom)
+		i--
+		dAtA[i] = 0x12
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if len(m.Addr) > 0 {
+		i -= len(m.Addr)
+		copy(dAtA[i:], m.Addr)
+		i = encodeVarintPeer(dAtA, i, uint64(len(m.Addr)))
+		i--
+		dAtA[i] = 0xa
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *PeerInfo) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -275,112 +315,129 @@ func (m *PeerInfo) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *PeerInfo) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *PeerInfo) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.StatusCode != 0 {
-		dAtA[i] = 0x8
-		i++
-		i = encodeVarintPeer(dAtA, i, uint64(m.StatusCode))
-	}
-	if len(m.Subsystem) > 0 {
-		dAtA[i] = 0x12
-		i++
-		i = encodeVarintPeer(dAtA, i, uint64(len(m.Subsystem)))
-		i += copy(dAtA[i:], m.Subsystem)
-	}
-	if len(m.Environment) > 0 {
-		dAtA[i] = 0x1a
-		i++
-		i = encodeVarintPeer(dAtA, i, uint64(len(m.Environment)))
-		i += copy(dAtA[i:], m.Environment)
-	}
-	if len(m.ServerId) > 0 {
-		dAtA[i] = 0x22
-		i++
-		i = encodeVarintPeer(dAtA, i, uint64(len(m.ServerId)))
-		i += copy(dAtA[i:], m.ServerId)
-	}
-	if len(m.Hostname) > 0 {
-		dAtA[i] = 0x2a
-		i++
-		i = encodeVarintPeer(dAtA, i, uint64(len(m.Hostname)))
-		i += copy(dAtA[i:], m.Hostname)
-	}
-	if len(m.Datacenter) > 0 {
-		dAtA[i] = 0x32
-		i++
-		i = encodeVarintPeer(dAtA, i, uint64(len(m.Datacenter)))
-		i += copy(dAtA[i:], m.Datacenter)
-	}
-	if len(m.Rack) > 0 {
-		dAtA[i] = 0x3a
-		i++
-		i = encodeVarintPeer(dAtA, i, uint64(len(m.Rack)))
-		i += copy(dAtA[i:], m.Rack)
-	}
-	if m.TimeChecked != 0 {
-		dAtA[i] = 0x40
-		i++
-		i = encodeVarintPeer(dAtA, i, uint64(m.TimeChecked))
-	}
-	if m.TimeLastUp != 0 {
-		dAtA[i] = 0x48
-		i++
-		i = encodeVarintPeer(dAtA, i, uint64(m.TimeLastUp))
-	}
-	if m.TimeCreated != 0 {
-		dAtA[i] = 0x50
-		i++
-		i = encodeVarintPeer(dAtA, i, uint64(m.TimeCreated))
-	}
-	if m.TimeConf != 0 {
-		dAtA[i] = 0x58
-		i++
-		i = encodeVarintPeer(dAtA, i, uint64(m.TimeConf))
-	}
-	if m.TimeUpSince != 0 {
-		dAtA[i] = 0x60
-		i++
-		i = encodeVarintPeer(dAtA, i, uint64(m.TimeUpSince))
-	}
-	if len(m.Via) > 0 {
-		dAtA[i] = 0x8a
-		i++
-		dAtA[i] = 0x1
-		i++
-		i = encodeVarintPeer(dAtA, i, uint64(len(m.Via)))
-		i += copy(dAtA[i:], m.Via)
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if len(m.NetInfo) > 0 {
-		for _, msg := range m.NetInfo {
-			dAtA[i] = 0xa2
-			i++
-			dAtA[i] = 0x1
-			i++
-			i = encodeVarintPeer(dAtA, i, uint64(msg.Size()))
-			n, err := msg.MarshalTo(dAtA[i:])
-			if err != nil {
-				return 0, err
+		for iNdEx := len(m.NetInfo) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.NetInfo[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintPeer(dAtA, i, uint64(size))
 			}
-			i += n
+			i--
+			dAtA[i] = 0x1
+			i--
+			dAtA[i] = 0xa2
 		}
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if len(m.Via) > 0 {
+		i -= len(m.Via)
+		copy(dAtA[i:], m.Via)
+		i = encodeVarintPeer(dAtA, i, uint64(len(m.Via)))
+		i--
+		dAtA[i] = 0x1
+		i--
+		dAtA[i] = 0x8a
 	}
-	return i, nil
+	if m.TimeUpSince != 0 {
+		i = encodeVarintPeer(dAtA, i, uint64(m.TimeUpSince))
+		i--
+		dAtA[i] = 0x60
+	}
+	if m.TimeConf != 0 {
+		i = encodeVarintPeer(dAtA, i, uint64(m.TimeConf))
+		i--
+		dAtA[i] = 0x58
+	}
+	if m.TimeCreated != 0 {
+		i = encodeVarintPeer(dAtA, i, uint64(m.TimeCreated))
+		i--
+		dAtA[i] = 0x50
+	}
+	if m.TimeLastUp != 0 {
+		i = encodeVarintPeer(dAtA, i, uint64(m.TimeLastUp))
+		i--
+		dAtA[i] = 0x48
+	}
+	if m.TimeChecked != 0 {
+		i = encodeVarintPeer(dAtA, i, uint64(m.TimeChecked))
+		i--
+		dAtA[i] = 0x40
+	}
+	if len(m.Rack) > 0 {
+		i -= len(m.Rack)
+		copy(dAtA[i:], m.Rack)
+		i = encodeVarintPeer(dAtA, i, uint64(len(m.Rack)))
+		i--
+		dAtA[i] = 0x3a
+	}
+	if len(m.Datacenter) > 0 {
+		i -= len(m.Datacenter)
+		copy(dAtA[i:], m.Datacenter)
+		i = encodeVarintPeer(dAtA, i, uint64(len(m.Datacenter)))
+		i--
+		dAtA[i] = 0x32
+	}
+	if len(m.Hostname) > 0 {
+		i -= len(m.Hostname)
+		copy(dAtA[i:], m.Hostname)
+		i = encodeVarintPeer(dAtA, i, uint64(len(m.Hostname)))
+		i--
+		dAtA[i] = 0x2a
+	}
+	if len(m.ServerId) > 0 {
+		i -= len(m.ServerId)
+		copy(dAtA[i:], m.ServerId)
+		i = encodeVarintPeer(dAtA, i, uint64(len(m.ServerId)))
+		i--
+		dAtA[i] = 0x22
+	}
+	if len(m.Environment) > 0 {
+		i -= len(m.Environment)
+		copy(dAtA[i:], m.Environment)
+		i = encodeVarintPeer(dAtA, i, uint64(len(m.Environment)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if len(m.Subsystem) > 0 {
+		i -= len(m.Subsystem)
+		copy(dAtA[i:], m.Subsystem)
+		i = encodeVarintPeer(dAtA, i, uint64(len(m.Subsystem)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.StatusCode != 0 {
+		i = encodeVarintPeer(dAtA, i, uint64(m.StatusCode))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
 }
 
 func encodeVarintPeer(dAtA []byte, offset int, v uint64) int {
+	offset -= sovPeer(v)
+	base := offset
 	for v >= 1<<7 {
 		dAtA[offset] = uint8(v&0x7f | 0x80)
 		v >>= 7
 		offset++
 	}
 	dAtA[offset] = uint8(v)
-	return offset + 1
+	return base
 }
 func (m *NetInfo) Size() (n int) {
 	if m == nil {
@@ -467,14 +524,7 @@ func (m *PeerInfo) Size() (n int) {
 }
 
 func sovPeer(x uint64) (n int) {
-	for {
-		n++
-		x >>= 7
-		if x == 0 {
-			break
-		}
-	}
-	return n
+	return (math_bits.Len64(x|1) + 6) / 7
 }
 func sozPeer(x uint64) (n int) {
 	return sovPeer(uint64((x << 1) ^ uint64((int64(x) >> 63))))
@@ -494,7 +544,7 @@ func (m *NetInfo) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -522,7 +572,7 @@ func (m *NetInfo) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= (uint64(b) & 0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -532,6 +582,9 @@ func (m *NetInfo) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthPeer
 			}
 			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthPeer
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -551,7 +604,7 @@ func (m *NetInfo) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= (uint64(b) & 0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -561,6 +614,9 @@ func (m *NetInfo) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthPeer
 			}
 			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthPeer
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -572,7 +628,7 @@ func (m *NetInfo) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthPeer
 			}
 			if (iNdEx + skippy) > l {
@@ -603,7 +659,7 @@ func (m *PeerInfo) Unmarshal(dAtA []byte) error {
 			}
 			b := dAtA[iNdEx]
 			iNdEx++
-			wire |= (uint64(b) & 0x7F) << shift
+			wire |= uint64(b&0x7F) << shift
 			if b < 0x80 {
 				break
 			}
@@ -631,7 +687,7 @@ func (m *PeerInfo) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.StatusCode |= (int32(b) & 0x7F) << shift
+				m.StatusCode |= int32(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -650,7 +706,7 @@ func (m *PeerInfo) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= (uint64(b) & 0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -660,6 +716,9 @@ func (m *PeerInfo) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthPeer
 			}
 			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthPeer
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -679,7 +738,7 @@ func (m *PeerInfo) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= (uint64(b) & 0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -689,6 +748,9 @@ func (m *PeerInfo) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthPeer
 			}
 			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthPeer
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -708,7 +770,7 @@ func (m *PeerInfo) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= (uint64(b) & 0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -718,6 +780,9 @@ func (m *PeerInfo) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthPeer
 			}
 			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthPeer
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -737,7 +802,7 @@ func (m *PeerInfo) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= (uint64(b) & 0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -747,6 +812,9 @@ func (m *PeerInfo) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthPeer
 			}
 			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthPeer
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -766,7 +834,7 @@ func (m *PeerInfo) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= (uint64(b) & 0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -776,6 +844,9 @@ func (m *PeerInfo) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthPeer
 			}
 			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthPeer
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -795,7 +866,7 @@ func (m *PeerInfo) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= (uint64(b) & 0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -805,6 +876,9 @@ func (m *PeerInfo) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthPeer
 			}
 			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthPeer
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -824,7 +898,7 @@ func (m *PeerInfo) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.TimeChecked |= (uint64(b) & 0x7F) << shift
+				m.TimeChecked |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -843,7 +917,7 @@ func (m *PeerInfo) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.TimeLastUp |= (uint64(b) & 0x7F) << shift
+				m.TimeLastUp |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -862,7 +936,7 @@ func (m *PeerInfo) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.TimeCreated |= (uint64(b) & 0x7F) << shift
+				m.TimeCreated |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -881,7 +955,7 @@ func (m *PeerInfo) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.TimeConf |= (uint64(b) & 0x7F) << shift
+				m.TimeConf |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -900,7 +974,7 @@ func (m *PeerInfo) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				m.TimeUpSince |= (uint64(b) & 0x7F) << shift
+				m.TimeUpSince |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -919,7 +993,7 @@ func (m *PeerInfo) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				stringLen |= (uint64(b) & 0x7F) << shift
+				stringLen |= uint64(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -929,6 +1003,9 @@ func (m *PeerInfo) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthPeer
 			}
 			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthPeer
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -948,7 +1025,7 @@ func (m *PeerInfo) Unmarshal(dAtA []byte) error {
 				}
 				b := dAtA[iNdEx]
 				iNdEx++
-				msglen |= (int(b) & 0x7F) << shift
+				msglen |= int(b&0x7F) << shift
 				if b < 0x80 {
 					break
 				}
@@ -957,6 +1034,9 @@ func (m *PeerInfo) Unmarshal(dAtA []byte) error {
 				return ErrInvalidLengthPeer
 			}
 			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthPeer
+			}
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
@@ -971,7 +1051,7 @@ func (m *PeerInfo) Unmarshal(dAtA []byte) error {
 			if err != nil {
 				return err
 			}
-			if skippy < 0 {
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
 				return ErrInvalidLengthPeer
 			}
 			if (iNdEx + skippy) > l {
@@ -990,6 +1070,7 @@ func (m *PeerInfo) Unmarshal(dAtA []byte) error {
 func skipPeer(dAtA []byte) (n int, err error) {
 	l := len(dAtA)
 	iNdEx := 0
+	depth := 0
 	for iNdEx < l {
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
@@ -1021,10 +1102,8 @@ func skipPeer(dAtA []byte) (n int, err error) {
 					break
 				}
 			}
-			return iNdEx, nil
 		case 1:
 			iNdEx += 8
-			return iNdEx, nil
 		case 2:
 			var length int
 			for shift := uint(0); ; shift += 7 {
@@ -1041,82 +1120,34 @@ func skipPeer(dAtA []byte) (n int, err error) {
 					break
 				}
 			}
-			iNdEx += length
 			if length < 0 {
 				return 0, ErrInvalidLengthPeer
 			}
-			return iNdEx, nil
+			iNdEx += length
 		case 3:
-			for {
-				var innerWire uint64
-				var start int = iNdEx
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return 0, ErrIntOverflowPeer
-					}
-					if iNdEx >= l {
-						return 0, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					innerWire |= (uint64(b) & 0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				innerWireType := int(innerWire & 0x7)
-				if innerWireType == 4 {
-					break
-				}
-				next, err := skipPeer(dAtA[start:])
-				if err != nil {
-					return 0, err
-				}
-				iNdEx = start + next
-			}
-			return iNdEx, nil
+			depth++
 		case 4:
-			return iNdEx, nil
+			if depth == 0 {
+				return 0, ErrUnexpectedEndOfGroupPeer
+			}
+			depth--
 		case 5:
 			iNdEx += 4
-			return iNdEx, nil
 		default:
 			return 0, fmt.Errorf("proto: illegal wireType %d", wireType)
 		}
+		if iNdEx < 0 {
+			return 0, ErrInvalidLengthPeer
+		}
+		if depth == 0 {
+			return iNdEx, nil
+		}
 	}
-	panic("unreachable")
+	return 0, io.ErrUnexpectedEOF
 }
 
 var (
-	ErrInvalidLengthPeer = fmt.Errorf("proto: negative length found during unmarshaling")
-	ErrIntOverflowPeer   = fmt.Errorf("proto: integer overflow")
+	ErrInvalidLengthPeer        = fmt.Errorf("proto: negative length found during unmarshaling")
+	ErrIntOverflowPeer          = fmt.Errorf("proto: integer overflow")
+	ErrUnexpectedEndOfGroupPeer = fmt.Errorf("proto: unexpected end of group")
 )
-
-func init() { proto.RegisterFile("peer.proto", fileDescriptor_peer_a9dd1329bec5f705) }
-
-var fileDescriptor_peer_a9dd1329bec5f705 = []byte{
-	// 368 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x4c, 0x92, 0xc1, 0xea, 0xd3, 0x40,
-	0x10, 0xc6, 0x8d, 0x69, 0xd3, 0x64, 0x52, 0xb1, 0x2e, 0x22, 0x8b, 0x4a, 0x8c, 0x3d, 0x15, 0x0f,
-	0x3d, 0x28, 0xbe, 0x80, 0x3d, 0x15, 0x44, 0x24, 0xd2, 0x73, 0xd8, 0x66, 0x27, 0x74, 0xa9, 0xd9,
-	0x0d, 0xbb, 0x93, 0x82, 0x3e, 0x89, 0x6f, 0xe3, 0xd5, 0xa3, 0x8f, 0x20, 0xf5, 0x45, 0xfe, 0x64,
-	0xb7, 0xa5, 0xbd, 0x7d, 0xf3, 0xfb, 0x66, 0x3e, 0x76, 0x98, 0x05, 0xe8, 0x11, 0xed, 0xba, 0xb7,
-	0x86, 0x0c, 0x4b, 0x8e, 0x6a, 0xaf, 0xe8, 0xe7, 0xf2, 0x23, 0xcc, 0xbe, 0x20, 0x6d, 0x75, 0x6b,
-	0x18, 0x83, 0x89, 0x90, 0xd2, 0xf2, 0xa8, 0x8c, 0x56, 0x59, 0xe5, 0x35, 0x7b, 0x01, 0x89, 0x16,
-	0x24, 0x4d, 0xc7, 0x1f, 0x7b, 0x7a, 0xa9, 0x96, 0xbf, 0x63, 0x48, 0xbf, 0x22, 0x5a, 0x3f, 0xf8,
-	0x06, 0x72, 0x47, 0x82, 0x06, 0x57, 0x37, 0x46, 0xa2, 0x9f, 0x9f, 0x56, 0x10, 0xd0, 0xc6, 0x48,
-	0x64, 0xaf, 0x21, 0x73, 0xc3, 0xde, 0xfd, 0x70, 0x84, 0xd7, 0xa0, 0x1b, 0x60, 0x25, 0xe4, 0xa8,
-	0x4f, 0xca, 0x1a, 0xdd, 0xa1, 0x26, 0x1e, 0x7b, 0xff, 0x1e, 0xb1, 0x57, 0x90, 0x39, 0xb4, 0x27,
-	0xb4, 0xb5, 0x92, 0x7c, 0xe2, 0xfd, 0x34, 0x80, 0xad, 0x64, 0x2f, 0x21, 0x3d, 0x18, 0x47, 0x5a,
-	0x74, 0xc8, 0xa7, 0xc1, 0xbb, 0xd6, 0xac, 0x00, 0x90, 0x82, 0x44, 0x83, 0x9a, 0xd0, 0xf2, 0xc4,
-	0xbb, 0x77, 0x64, 0x5c, 0xd9, 0x8a, 0xe6, 0xc8, 0x67, 0x61, 0xe5, 0x51, 0xb3, 0xb7, 0x30, 0x27,
-	0xd5, 0x61, 0xdd, 0x1c, 0xb0, 0x39, 0xa2, 0xe4, 0x69, 0x19, 0xad, 0x26, 0x55, 0x3e, 0xb2, 0x4d,
-	0x40, 0xac, 0xbc, 0xb4, 0x7c, 0x17, 0x8e, 0xea, 0xa1, 0xe7, 0x99, 0x6f, 0x81, 0x91, 0x7d, 0x16,
-	0x8e, 0x76, 0xfd, 0x2d, 0xc4, 0xa2, 0x20, 0x94, 0x1c, 0xee, 0x42, 0x02, 0x1a, 0x97, 0x0a, 0x2d,
-	0x46, 0xb7, 0x3c, 0xf7, 0x7e, 0xea, 0x7d, 0xa3, 0x5b, 0xb6, 0x84, 0x27, 0xde, 0x1c, 0xfa, 0xda,
-	0x29, 0xdd, 0x20, 0x9f, 0xdf, 0x02, 0x76, 0xfd, 0xb7, 0x11, 0xb1, 0x05, 0xc4, 0x27, 0x25, 0xf8,
-	0x33, 0xff, 0xf6, 0x51, 0xb2, 0x77, 0x90, 0x6a, 0xa4, 0x5a, 0xe9, 0xd6, 0xf0, 0xe7, 0x65, 0xbc,
-	0xca, 0xdf, 0x3f, 0x5d, 0x87, 0x3b, 0xaf, 0x2f, 0x47, 0xae, 0x66, 0x3a, 0x88, 0x4f, 0x8b, 0x3f,
-	0xe7, 0x22, 0xfa, 0x7b, 0x2e, 0xa2, 0x7f, 0xe7, 0x22, 0xfa, 0xf5, 0xbf, 0x78, 0xb4, 0x4f, 0xfc,
-	0xcf, 0xf8, 0xf0, 0x10, 0x00, 0x00, 0xff, 0xff, 0xc8, 0x83, 0x26, 0x07, 0x27, 0x02, 0x00, 0x00,
-}

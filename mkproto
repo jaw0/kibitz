@@ -5,5 +5,6 @@
 # Created: 2018-Nov-05 10:06 (EST)
 # Function: compile protobuf
 
-PATH=$PATH:./bin protoc --gofast_out=. *.proto
+GOPATH=`echo ~/go`
+PATH=$PATH:$GOPATH/bin protoc --gofast_out=. *.proto
 
