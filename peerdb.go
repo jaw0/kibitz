@@ -151,7 +151,10 @@ func (pdb *DB) Update(px PeerImport) {
 	// update status
 	p.Update(px, pdb)
 
-	go pdb.iface.Update(pi.GetServerId(), p.status == STATUS_UP, p.info.GetSubsystem() == p.pdb.sys)
+	switch p.status {
+	case STATUS_UP, STATUS_DOWN:
+		go pdb.iface.Update(pi.GetServerId(), p.status != STATUS_DOWN, p.info.GetSubsystem() == p.pdb.sys)
+	}
 }
 
 // their reports
